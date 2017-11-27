@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
-salt=$1
-pathToScan="/tmp/5900"
-
-# make sha512 tool
-gcc -o /tmp/passwd-sha512 ./passwd-sha512.c -lcrypt
-chmod +x /tmp/passwd-sha512
-
-# Install vncdotool
-apt-get install -y vncsnapshot
+pathToScan=$1
 
 cd $pathToScan
 split -d -l 1000 list.csv --additional-suffix=.scan
@@ -15,7 +7,7 @@ rm -f list.csv
 
 for file in $pathToScan/*.scan; do
   while read server; do
-    filename=$(/tmp/passwd-sha512 $server --salt $salt | tr -dc '[:alnum:]\n\r')
+    filename=$(passwd-sha512 $server | tr -dc '[:alnum:]\n\r')
     vncsnapshot $server $filename.jpg > $pathToScan/screenshot.log 2>&1 &
   done <$file
   sleep 30
