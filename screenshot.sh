@@ -10,14 +10,14 @@ chmod +x /tmp/passwd-sha512
 apt-get install -y vncsnapshot
 
 cd $pathToScan
-split -d -l 1000 list.csv
+split -d -l 1000 list.csv --additional-suffix=.scan
 rm -f list.csv
 
-for file in $pathToScan/*; do
+for file in $pathToScan/*.scan; do
   while read server; do
     filename=$(/tmp/passwd-sha512 $server --salt $salt | tr -dc '[:alnum:]\n\r')
-    vncsnapshot $server $filename.jpg &
+    vncsnapshot $server $filename.jpg > $pathToScan/screenshot.log 2>&1 &
   done <$file
-  sleep 180
+  sleep 30
   killall vncsnapshot
 done
