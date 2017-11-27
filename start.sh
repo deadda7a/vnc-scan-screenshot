@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-
 docker build . -t scan:latest
 
 for i in {1..255}; do
-  ip=$i.0.0.0/8
-  kubectl run --image=scan:latest $ip -v data:/data 
+  subnet=$i.0.0.0/8
+  docker run -d --image=scan:latest $subnet -v data:/data --name $subnet
 done

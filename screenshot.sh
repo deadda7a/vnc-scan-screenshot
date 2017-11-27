@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-pathToScan=$1
+port=$1
+pathToScan=/data/$1
 
 cd $pathToScan
 split -d -l 1000 list.csv --additional-suffix=.scan
