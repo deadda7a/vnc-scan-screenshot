@@ -4,9 +4,7 @@ ADD . /app
 WORKDIR /app
 
 RUN apt-get update; \
-  apt-get upgrade -y; \
-  rm -rf /var/lib/apt/lists/*; \
-	apt-get clean
+  apt-get upgrade -y
 
 RUN apt-get -y install \
   build-essential \
@@ -33,6 +31,11 @@ RUN git clone https://github.com/zmap/zmap.git /tmp/zmap; \
 # make sha512 tool
 RUN gcc -o /usr/local/bin/passwd-sha512 ./passwd-sha512.c -lcrypt; \
   chmod +x /usr/local/bin/passwd-sha512
+
+# Cleanup
+RUN rm -rf /var/lib/apt/lists/*; \
+	apt-get clean
+
 
 VOLUME ["/data"]
 ENTRYPOINT ["/bin/bash", "scan.sh"]
