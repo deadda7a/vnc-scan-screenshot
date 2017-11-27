@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+$subnet=$1
 ports=("5900" "5901")
 
 for port in $ports; do
-  mkdir /tmp/$port
-  zmap -p $port -o /tmp/5900/list.csv
+  mkdir /data/$port
+  zmap -p $port $subnet -o /data/$port/list.csv
   screenshot.sh $port
 done

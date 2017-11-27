@@ -34,4 +34,5 @@ RUN git clone https://github.com/zmap/zmap.git /tmp/zmap; \
 RUN gcc -o /usr/local/bin/passwd-sha512 ./passwd-sha512.c -lcrypt; \
   chmod +x /usr/local/bin/passwd-sha512
 
-ENTRYPOINT ["/bin/bash", "start.sh"]
+VOLUME ["/data"]
+ENTRYPOINT ["/bin/bash", "scan.sh"]
