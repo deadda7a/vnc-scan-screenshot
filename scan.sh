@@ -9,4 +9,5 @@ cmake .
 make -j4
 make install
 
-zmap -p 5900 -N 1000 -f "response,saddr" -o /tmp/5900/list.csv
+mkdir /tmp/5900
+zmap -p 5900 -o /tmp/5900/list.csv
